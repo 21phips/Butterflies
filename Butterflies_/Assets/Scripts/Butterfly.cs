@@ -33,9 +33,9 @@ public class Butterfly : MonoBehaviour
 
     private void Rotate()
     {
-       
+        rb.freezeRotation = true;
         float inputAxis = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.back * inputAxis * rotateSpeed);
-         
+        rb.freezeRotation = false;
     }
 }
