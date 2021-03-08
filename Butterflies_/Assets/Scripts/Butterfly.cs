@@ -6,6 +6,7 @@ public class Butterfly : MonoBehaviour
 {
     public float flySpeed = 3f;
     private Rigidbody rb; 
+    public float rotateSpeed = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,9 @@ public class Butterfly : MonoBehaviour
 
     private void Rotate()
     {
-
+       
+        float inputAxis = Input.GetAxis("Horizontal");
+        transform.Rotate(Vector3.back * inputAxis * rotateSpeed);
+         
     }
 }
