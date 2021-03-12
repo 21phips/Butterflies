@@ -41,8 +41,17 @@ public class Butterfly : MonoBehaviour
             isAlive = false;
             //Reset
             SceneManager.LoadScene(currentLevel);
-        
+
         }
+
+       if (collision.gameObject.tag == "Win")
+        {
+            //go to next level
+            SceneManager.LoadScene(currentLevel + 1);
+            Debug.Log("hit Win");
+        }
+        
+
     }
 
 
