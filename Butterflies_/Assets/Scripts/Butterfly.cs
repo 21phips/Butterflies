@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class Butterfly : MonoBehaviour
 {
     public float flySpeed = 3f;
-    private Rigidbody rb; 
+    private Rigidbody rb;
     public float rotateSpeed = 2.0f;
     bool isAlive = true;
     int currentLevel;
+    public ParticleSystem dustFX;
+    public GameObject explodeFX;
+    AudioSource myAudio; 
 
     // Start is called before the first frame update
     void Start()
@@ -29,28 +32,31 @@ public class Butterfly : MonoBehaviour
             //roatate movement
             Rotate();
         }
-        
-    
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Bad")
+        if (collision.gameObject.tag == "Bad")
         {
+            //explode
+            Instantiate(explodeFX, transform.position, transform.rotation);
             //Die
             isAlive = false;
             //Reset
-            SceneManager.LoadScene(currentLevel);
+            Invoke("ResetScene", 2f);
+            
 
         }
 
-       if (collision.gameObject.tag == "Win")
+        if (collision.gameObject.tag == "Win")
         {
             //go to next level
             SceneManager.LoadScene(currentLevel + 1);
             Debug.Log("hit Win");
         }
-        
+
 
     }
 
@@ -60,6 +66,11 @@ public class Butterfly : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rb.AddRelativeForce(Vector3.up * flySpeed);
+            dustFX.Play();
+        }
+        else
+        {
+            dustFX.Stop();
         }
     }
 
@@ -70,4 +81,12 @@ public class Butterfly : MonoBehaviour
         transform.Rotate(Vector3.back * inputAxis * rotateSpeed);
         rb.freezeRotation = false;
     }
+
+    private void ResetScene()
+    {
+        SceneManager.LoadScene(currentLevel);
+    }
+
+     
+
 }
