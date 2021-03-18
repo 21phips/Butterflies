@@ -12,13 +12,16 @@ public class Butterfly : MonoBehaviour
     int currentLevel;
     public ParticleSystem dustFX;
     public GameObject explodeFX;
-    AudioSource myAudio; 
+    AudioSource myAudio;
+    public AudioClip explodeSound;
+    public AudioClip winSound;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+        myAudio = GetComponent<AudioSource>(); 
     }
 
     // Update is called once per frame
@@ -42,6 +45,7 @@ public class Butterfly : MonoBehaviour
         {
             //explode
             Instantiate(explodeFX, transform.position, transform.rotation);
+            myAudio.PlayOneShot(explodeSound);
             //Die
             isAlive = false;
             //Reset
@@ -55,6 +59,7 @@ public class Butterfly : MonoBehaviour
             //go to next level
             SceneManager.LoadScene(currentLevel + 1);
             Debug.Log("hit Win");
+            myAudio.PlayOneShot(winSound);
         }
 
 
